@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Input } from '../components/Input'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../api';
 
 export function Login() {
   const navigate = useNavigate();

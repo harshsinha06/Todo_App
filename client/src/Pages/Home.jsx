@@ -13,7 +13,7 @@ export function HomePage() {
             const token = localStorage.getItem("token");
             if (token) {
                 try {
-                    const response = await axios.get(`${API_BASE_URL}me`, {
+                    const response = await axios.get(`${API_BASE_URL}/me`, {
                         headers: {
                             Authorization: token
                         }
