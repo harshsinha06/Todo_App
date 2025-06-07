@@ -1,11 +1,11 @@
-const nodemailer = require('nodemailer');
-const dotenv = require('dotenv');
-const crypto = require('crypto');
-const { OtpModel } = require('./db');
+import { createTransport } from 'nodemailer';
+import { config } from 'dotenv';
+import { randomInt } from 'crypto';
+import { OtpModel } from './db';
 
-dotenv.config();
+config();
 
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
   service: 'gmail',
   host: "smtp.gmail.com",
   port: 587,
@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 });
 
 function generateOTP() {
-  return crypto.randomInt(100000, 999999).toString();
+  return randomInt(100000, 999999).toString();
 }
 
 async function sendOtpEmail(email) {
@@ -46,5 +46,5 @@ async function sendOtpEmail(email) {
 
 }
 
-module.exports = { sendOtpEmail };
+export default { sendOtpEmail };
 

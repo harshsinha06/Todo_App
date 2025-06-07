@@ -1,11 +1,11 @@
-const express = require("express");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const { UserModel, OtpModel } = require("../db");
-const { JWT_SECRET, auth } = require("../auth");
-const { sendOtpEmail } = require("../sendMail");
+import { Router } from "express";
+import { sign } from "jsonwebtoken";
+import { hash, compare } from "bcrypt";
+import { UserModel, OtpModel } from "../db";
+import { JWT_SECRET, auth } from "../auth";
+import { sendOtpEmail } from "../sendMail";
 
-const router = express.Router();
+const router = Router();
 
 router.post("/signup", async (req, res) => {
     const email = req.body.email;
@@ -13,7 +13,7 @@ router.post("/signup", async (req, res) => {
     const name = req.body.name
 
     try {
-        const hashedpassword = await bcrypt.hash(password, 10);
+        const hashedpassword = await hash(password, 10);
         await UserModel.create({
             name: name,
             email: email,
@@ -88,10 +88,10 @@ router.post("/login", async (req, res) => {
         });
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password)
+    const passwordMatch = await compare(password, user.password)
 
     if (passwordMatch) {
-        const token = jwt.sign({
+        const token = sign({
             id: user._id.toString()
         }, JWT_SECRET);
 
@@ -117,4 +117,4 @@ router.get("/me", auth, async (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

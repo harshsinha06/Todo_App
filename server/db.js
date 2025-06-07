@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema as _Schema, model } from "mongoose";
 
-const Schema = mongoose.Schema;
+const Schema = _Schema;
 const ObjectId = Schema.ObjectId;
 
 const User = new Schema({
@@ -27,13 +27,7 @@ const Todo = new Schema({
     }
 });
 
-const UserModel = mongoose.model('users', User);
-const TodoModel = mongoose.model('todos', Todo);
-const OtpModel = mongoose.model('otps', OTP);
-
-module.exports = {
-    UserModel: UserModel,
-    TodoModel: TodoModel,
-    OtpModel: OtpModel
-}
+export const UserModel = model('users', User);
+export const TodoModel = model('todos', Todo);
+export const OtpModel = model('otps', OTP);
 

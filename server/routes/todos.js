@@ -1,8 +1,8 @@
-const express = require("express");
-const { TodoModel } = require("../db");
-const { auth } = require("../auth");
+import { Router } from "express";
+import { TodoModel } from "../db";
+import { auth } from "../auth";
 
-const router = express.Router();
+const router = Router();
 
 router.route("/todos")
 
@@ -100,4 +100,4 @@ router.put("/todos/:id", auth, async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const { UserModel } = require("./db");
+import { UserModel } from "./db";
 
-const jwt = require("jsonwebtoken");
+import { verify } from "jsonwebtoken";
 const JWT_SECRET = "asdf@123";
 
 async function auth(req, res, next) {
@@ -13,7 +13,7 @@ async function auth(req, res, next) {
     }
 
     try {
-        const decodedData = jwt.verify(token, JWT_SECRET);
+        const decodedData = verify(token, JWT_SECRET);
         const user = await UserModel.findOne({ _id: decodedData.id });
 
         if (!user) {
@@ -28,4 +28,4 @@ async function auth(req, res, next) {
     }
 }
 
-module.exports = { auth, JWT_SECRET };
+export default { auth, JWT_SECRET };

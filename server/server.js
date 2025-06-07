@@ -1,21 +1,23 @@
-const express = require("express");
-const cors = require("cors");
-require('dotenv').config();
+import express, { json } from "express";
+import cors from "cors";
+import { config } from 'dotenv';
 
-const userRoutes = require("./routes/users");
-const todoRoutes = require("./routes/todos");
+import userRoutes from "./routes/users";
+import todoRoutes from "./routes/todos";
+
+config();
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-const mongoose = require("mongoose");
-mongoose.connect(MONGO_URI);
+import { connect } from "mongoose";
+connect(MONGO_URI);
 
 const app = express();
 
 
 
-app.use(express.json());
+app.use(json());
 app.use(cors({origin: '*'}));
 
 app.use(userRoutes);
