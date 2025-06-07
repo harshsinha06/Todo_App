@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { TodoModel } from "../db";
-import { auth } from "../auth";
+import { TodoModel } from "../db.js";
+import { auth } from "../auth.js";
 
 const router = Router();
 

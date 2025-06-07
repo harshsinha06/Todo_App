@@ -1,7 +1,7 @@
 import { createTransport } from 'nodemailer';
 import { config } from 'dotenv';
 import { randomInt } from 'crypto';
-import { OtpModel } from './db';
+import { OtpModel } from './db.js';
 
 config();
 
@@ -20,7 +20,7 @@ function generateOTP() {
   return randomInt(100000, 999999).toString();
 }
 
-async function sendOtpEmail(email) {
+export async function sendOtpEmail(email) {
   const otp = generateOTP();
 
   const mailOptions = {
@@ -45,6 +45,4 @@ async function sendOtpEmail(email) {
   }
 
 }
-
-export default { sendOtpEmail };
 

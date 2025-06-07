@@ -1,9 +1,10 @@
-import { UserModel } from "./db";
+import { UserModel } from "./db.js";
 
-import { verify } from "jsonwebtoken";
-const JWT_SECRET = "asdf@123";
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
+export const JWT_SECRET = "asdf@123";
 
-async function auth(req, res, next) {
+export async function auth(req, res, next) {
     const token = req.headers.authorization;
 
     if (!token) {
@@ -28,4 +29,3 @@ async function auth(req, res, next) {
     }
 }
 
-export default { auth, JWT_SECRET };

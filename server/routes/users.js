@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { sign } from "jsonwebtoken";
+import pkg from 'jsonwebtoken';
+const { sign } = pkg;
 import { hash, compare } from "bcrypt";
-import { UserModel, OtpModel } from "../db";
-import { JWT_SECRET, auth } from "../auth";
-import { sendOtpEmail } from "../sendMail";
+import { UserModel, OtpModel } from "../db.js";
+import { JWT_SECRET, auth } from "../auth.js";
+import { sendOtpEmail } from "../sendMail.js";
 
 const router = Router();
 
