@@ -35,7 +35,7 @@ export function Signup() {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/signup", formData);
+      const response = await axios.post(`${API_BASE_URL}/signup`, formData);
       navigate('/login');
     }
     catch (err) {
@@ -47,7 +47,7 @@ export function Signup() {
 
   const handleSendOtp = async () => {
     try {
-      const response = await axios.post("http://localhost:3000/send-otp", {
+      const response = await axios.post(`${API_BASE_URL}/send-otp`, {
         email: formData.email
       })
       setOtpSent(true);
@@ -61,7 +61,7 @@ export function Signup() {
 
   const handleVerifyOtp = async () => {
     try {
-      const respose = await axios.post("http://localhost:3000/verify-otp", {
+      const respose = await axios.post(`${API_BASE_URL}/verify-otp`, {
         email: formData.email,
         otp: otp
       });

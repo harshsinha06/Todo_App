@@ -15,7 +15,7 @@ export function TodoDashboard() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.get("http://localhost:3000/todos", {
+        const response = await axios.get(`${API_BASE_URL}/todos`, {
           headers: {
             Authorization: token
           }
@@ -41,7 +41,7 @@ export function TodoDashboard() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.post("http://localhost:3000/todos", {
+        const response = await axios.post(`${API_BASE_URL}/todos`, {
           title: newTodo.title.trim(),
           description: newTodo.description.trim(),
           priority: newTodo.priority,
@@ -68,7 +68,7 @@ export function TodoDashboard() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.delete(`http://localhost:3000/todos/${id}`, {
+        const response = await axios.delete(`${API_BASE_URL}/todos/${id}`, {
           headers: { Authorization: token }
         });
 
@@ -91,7 +91,7 @@ export function TodoDashboard() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const response = await axios.put(`http://localhost:3000/todos/${id}`, {
+        const response = await axios.put(`${API_BASE_URL}/todos/${id}`, {
           title: editTodo.title,
           description: editTodo.description,
           priority: editTodo.priority,

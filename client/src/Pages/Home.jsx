@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { API_BASE_URL } from '../api';
 import { useEffect, useState } from "react";
 
 export function HomePage() {
@@ -12,7 +13,7 @@ export function HomePage() {
             const token = localStorage.getItem("token");
             if (token) {
                 try {
-                    const response = await axios.get("http://localhost:3000/me", {
+                    const response = await axios.get(`${API_BASE_URL}me`, {
                         headers: {
                             Authorization: token
                         }
