@@ -8,7 +8,7 @@ export function TodoDashboard() {
 
   const [showAddInput, setShowAddInput] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [newTodo, setNewTodo] = useState({ title: "", description: "" });
+  const [newTodo, setNewTodo] = useState({ title: "", description: "", priority: 2 });
   const [editTodo, setEditTodo] = useState(null);
 
   const fetchTodos = async () => {
@@ -44,15 +44,15 @@ export function TodoDashboard() {
         const response = await axios.post("http://localhost:3000/todos", {
           title: newTodo.title.trim(),
           description: newTodo.description.trim(),
+          priority: newTodo.priority,
           done: false
         },
           {
             headers: { Authorization: token }
           }
         );
-
         console.log("Todo Created:", response.data?.message);
-        setNewTodo({ title: "", description: "" });
+        setNewTodo({ title: "", description: "", priority: 2 });
         setShowAddInput(false);
 
         // Refresh the list
@@ -94,6 +94,7 @@ export function TodoDashboard() {
         const response = await axios.put(`http://localhost:3000/todos/${id}`, {
           title: editTodo.title,
           description: editTodo.description,
+          priority: editTodo.priority,
           done: editTodo.done
         },
           {
@@ -124,15 +125,16 @@ export function TodoDashboard() {
         </header>
 
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {todos.map((todo) => (<TodoCard key={todo._id} todo={todo} onEdit={updateTodo} onDelete={handleDelete} />))}
+          {todos.slice().sort((a, b) => a.priority - b.priority) // 1 (High) comes before 2 (Medium), then 3 (Low)
+            .map((todo) => (<TodoCard key={todo._id} todo={todo} onEdit={updateTodo} onDelete={handleDelete} />))}
         </div>
 
         {showAddInput && (
-          <TodoForm mode={"add"} todo = {newTodo} setTodo={setNewTodo} onCancel = {() => setShowAddInput(false)} onSubmit = {handleCreate} />
+          <TodoForm mode={"add"} todo={newTodo} setTodo={setNewTodo} onCancel={() => setShowAddInput(false)} onSubmit={handleCreate} />
         )}
 
         {showEdit && (
-          <TodoForm mode = {"edit"} todo={editTodo} setTodo={setEditTodo} onCancel={() => setShowEdit(false)} onSubmit={() => handleUpdate(editTodo._id)} />
+          <TodoForm mode={"edit"} todo={editTodo} setTodo={setEditTodo} onCancel={() => setShowEdit(false)} onSubmit={() => handleUpdate(editTodo._id)} />
         )}
 
         {todos.length === 0 && (<p className="text-center text-gray-500 text-lg mt-20">You have no todos yet.</p>)}

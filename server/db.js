@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const User = new Schema({
-    name : String,
-    email: { type: String, unique: true, required: true},
-    password : String
+    name: String,
+    email: { type: String, unique: true, required: true },
+    password: String
 });
 
 const OTP = new Schema({
@@ -19,7 +19,12 @@ const Todo = new Schema({
     title: String,
     description: String,
     done: Boolean,
-    userID: ObjectId
+    userID: ObjectId,
+    priority: {
+        type: Number,
+        enum: [1, 2, 3], // Only these values allowed
+        default: 2
+    }
 });
 
 const UserModel = mongoose.model('users', User);
@@ -27,8 +32,8 @@ const TodoModel = mongoose.model('todos', Todo);
 const OtpModel = mongoose.model('otps', OTP);
 
 module.exports = {
-    UserModel : UserModel,
-    TodoModel : TodoModel,
-    OtpModel : OtpModel
+    UserModel: UserModel,
+    TodoModel: TodoModel,
+    OtpModel: OtpModel
 }
 

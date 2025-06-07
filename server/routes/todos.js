@@ -21,12 +21,14 @@ router.route("/todos")
         const title = req.body.title;
         const description = req.body.description;
         const done = req.body.done;
+        const priority = req.body.priority;
 
         await TodoModel.create({
             title: title,
             description: description,
             done: done,
-            userID: userId
+            userID: userId,
+            priority: priority
         });
 
         res.json({
@@ -62,7 +64,7 @@ router.delete("/todos/:id", auth, async (req, res) => {
 router.put("/todos/:id", auth, async (req, res) => {
     const userId = req.userId;
     const todoId = req.params.id;
-    const { title, description, done } = req.body;
+    const { title, description, done, priority } = req.body;
 
     const todo = await TodoModel.findOne({
         _id: todoId,
@@ -84,6 +86,7 @@ router.put("/todos/:id", auth, async (req, res) => {
         todo.title = title ?? todo.title;
         todo.description = description ?? todo.description;
         todo.done = done ?? todo.done;
+        todo.priority = priority ?? todo.priority;
 
         await todo.save();
         res.json({
