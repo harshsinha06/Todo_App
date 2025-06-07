@@ -66,12 +66,6 @@ router.put("/todos/:id", auth, async (req, res) => {
     const todoId = req.params.id;
     const { title, description, done, priority } = req.body;
 
-    const todo = await TodoModel.findOne({
-        _id: todoId,
-        userID: userId
-    });
-
-
     try {
         const todo = await TodoModel.findOne({
             _id: todoId,

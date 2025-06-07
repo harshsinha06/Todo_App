@@ -11,11 +11,10 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 await mongoose.connect(MONGO_URI);
-
 const app = express();
 
 app.use(json());
-app.use(cors({origin: '*'}));
+app.use(cors({ origin: '*' }));
 
 app.use(userRoutes);
 app.use(todoRoutes);
