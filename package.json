@@ -4,16 +4,15 @@
   "private": true,
   "type": "module",
   "main": "server.js",
-  "scripts": {
-    "start": "nodemon server.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server.js",
-    "client": "npm --prefix client run dev",
-    "build": "npm --prefix client run build",
-    "lint": "npm --prefix client run lint",
-    "preview": "npm --prefix client run preview",
-    "postinstall": "npm install --prefix client && npm run build --prefix client"
-  },
+"scripts": {
+  "start": "nodemon server.js",
+  "dev": "concurrently \"npm run server\" \"npm run client\"",
+  "server": "nodemon server.js",
+  "client": "vite",
+  "build": "vite build",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@tailwindcss/vite": "^4.1.8",
     "axios": "^1.9.0",
