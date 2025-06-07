@@ -14,7 +14,7 @@ await mongoose.connect(MONGO_URI);
 const app = express();
 
 app.use(json());
-app.use(cors({ origin: '*' }));
+app.use(cors());
 
 app.use(userRoutes);
 app.use(todoRoutes);
