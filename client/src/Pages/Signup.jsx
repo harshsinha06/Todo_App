@@ -3,6 +3,7 @@ import { Input } from '../components/Input'
 import axios from 'axios';
 import { API_BASE_URL } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../components/Loarder';
 
 export function Signup() {
   const navigate = useNavigate();
@@ -16,8 +17,12 @@ export function Signup() {
   const isValidEmail = /\S+@\S+\.\S+/.test(formData.email);
 
   const [otpSent, setOtpSent] = useState(false);
+  const [otpLoading, setOtpLoading] = useState(false);
+
   const [otp, setOtp] = useState('');
   const [verified, setVerified] = useState(false);
+  const [verifyingOtp, setVerifyingOtp] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -47,6 +52,8 @@ export function Signup() {
 
 
   const handleSendOtp = async () => {
+    setOtpLoading(true); // start loading
+
     try {
       const response = await axios.post(`${API_BASE_URL}/send-otp`, {
         email: formData.email
@@ -58,9 +65,13 @@ export function Signup() {
       const msg = err.response?.data?.message || "Failed to send OTP.";
       setError(msg);
     }
+    finally {
+      setOtpLoading(false); // stop loading
+    }
   }
 
   const handleVerifyOtp = async () => {
+    setVerifyingOtp(true); // Start loading
     try {
       const respose = await axios.post(`${API_BASE_URL}/verify-otp`, {
         email: formData.email,
@@ -71,6 +82,9 @@ export function Signup() {
     } catch (err) {
       const msg = err.response?.data?.message || "OTP verification failed.";
       setError(msg);
+    }
+    finally {
+      setVerifyingOtp(false); // Stop loading
     }
   };
 
@@ -87,8 +101,9 @@ export function Signup() {
             <Input label_name="Email" placeholder="Enter email" type="text" name="email" onChange={handleChange} />
 
             {!otpSent && (
-              <button type="button" disabled={!isValidEmail} className='bg-blue-600 text-white py-2 rounded hover:bg-blue-500 disabled:opacity-50' onClick={handleSendOtp}>Send OTP</button>
-
+              <button type="button" disabled={!isValidEmail} className='bg-blue-600 text-white py-2 rounded hover:bg-blue-500 disabled:opacity-50' onClick={handleSendOtp}>
+                {otpLoading ? <Loader message={"Sending..."} /> : "Send OTP"}
+              </button>
             )}
 
             {otpSent && !verified && (

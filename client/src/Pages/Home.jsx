@@ -44,7 +44,7 @@ export function HomePage() {
                 <nav className="space-x-4">
                     {name ? (
                         <>
-                            <span className="text-gray-700">Welcome, <strong>{name}</strong></span>
+                            <span className="text-gray-700">Welcome, <strong>{name.split(' ')[0]}</strong></span>
                             <button onClick={handleLogout} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logout</button>
                         </>
                         ) : (
